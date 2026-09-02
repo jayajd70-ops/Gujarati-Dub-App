@@ -58,8 +58,8 @@ export class SubtitleEngine implements ISubtitleEngine {
 
     // Scale font size based on video height (portrait/landscape responsive)
     const scaleFactor = height / 1000;
-    const baseSizes = { sm: 22, md: 30, lg: 38 };
-    const fontSize = Math.max(14, Math.round(baseSizes[fontSizeKey] * scaleFactor));
+    const baseSizes = { sm: 30, md: 38, lg: 46 };
+    const fontSize = Math.max(20, Math.round(baseSizes[fontSizeKey] * scaleFactor));
 
     ctx.save();
     ctx.font = `600 ${fontSize}px "Noto Sans Devanagari", "Noto Sans Gujarati", "Inter", sans-serif`;
