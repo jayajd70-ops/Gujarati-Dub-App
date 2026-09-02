@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
 
   return {
-    base: isProduction ? '/Gujarati-Video-Dubber/' : '/',
+    base: isProduction ? '/Gujarati-Dub-App/' : '/',
     plugins: [
       react(),
       ...(isHttps ? [basicSsl()] : []),
