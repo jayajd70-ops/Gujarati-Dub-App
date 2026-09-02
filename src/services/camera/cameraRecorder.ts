@@ -141,12 +141,19 @@ export class CameraRecorderService {
     const MAX_DURATION_SEC = 30;
 
     // Detect optimal supported mimeType
+    // WebM first: MediaRecorder's chunked MP4 output is well known to be
+    // unreliable when later re-decoded by the browser's Web Audio decoder
+    // (decodeAudioData often returns silent/garbled audio instead of
+    // throwing, which then feeds transcription engines near-silence and
+    // produces hallucinated/looping output). WebM's chunks reassemble
+    // reliably. MP4 stays as a fallback for browsers (mainly iOS Safari)
+    // that don't support WebM recording at all.
     const mimeTypes = [
-      'video/mp4;codecs=avc1,mp4a.40.2',
-      'video/mp4',
       'video/webm;codecs=vp9,opus',
       'video/webm;codecs=vp8,opus',
       'video/webm',
+      'video/mp4;codecs=avc1,mp4a.40.2',
+      'video/mp4',
     ];
     let selectedMimeType = '';
     for (const mime of mimeTypes) {
