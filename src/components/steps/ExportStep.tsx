@@ -33,6 +33,7 @@ export const ExportStep: React.FC<ExportStepProps> = ({
   const [exportedFilename, setExportedFilename] = useState<string>('');
   const [exportedContainerInfo, setExportedContainerInfo] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [shareStatus, setShareStatus] = useState<string | null>(null);
 
   const langLabel = project.targetLanguage === 'hi' ? 'Hindi' : 'English';
 
@@ -70,13 +71,35 @@ export const ExportStep: React.FC<ExportStepProps> = ({
   };
 
   const handleShare = async () => {
-    if (!exportedVideoBlob) return;
+    if (!exportedVideoBlob) {
+      setErrorMessage(
+        'No exported video is ready yet. Please wait for export to finish, then try Share / Save again.'
+      );
+      return;
+    }
+    setErrorMessage(null);
+    setShareStatus(null);
     const filename = exportedFilename || `Gujarati-Dub-Studio-${langLabel}.mp4`;
-    await VideoExportEngine.shareOrDownload(
-      exportedVideoBlob,
-      filename,
-      `Gujarati Dub Studio - ${langLabel} Video`
-    );
+    try {
+      const result = await VideoExportEngine.shareOrDownload(
+        exportedVideoBlob,
+        filename,
+        `Gujarati Dub Studio - ${langLabel} Video`
+      );
+      if (result?.shared) {
+        setShareStatus('Shared successfully via your device\'s share sheet.');
+      } else if (result?.downloaded) {
+        setShareStatus(`Saved as "${filename}" -- check your browser's Downloads.`);
+      } else if (!result?.cancelled) {
+        setErrorMessage(
+          'Share/Save did not complete, and the browser did not report a specific reason. Try again, or long-press the video preview above to save it directly.'
+        );
+      }
+    } catch (err: any) {
+      setErrorMessage(
+        `Share/Save failed: ${err?.name ? err.name + ' -- ' : ''}${err?.message || 'Unknown error from the browser.'}`
+      );
+    }
   };
 
   return (
@@ -156,6 +179,16 @@ export const ExportStep: React.FC<ExportStepProps> = ({
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent-rose)' }}>
             <AlertCircle size={18} />
             <p style={{ margin: 0, fontSize: '0.85rem' }}>{errorMessage}</p>
+          </div>
+        </div>
+      )}
+
+      {/* Share/Save result state */}
+      {shareStatus && (
+        <div className="glass-card" style={{ borderColor: 'var(--accent-emerald)', background: 'rgba(16, 185, 129, 0.08)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent-emerald)' }}>
+            <CheckCircle2 size={18} />
+            <p style={{ margin: 0, fontSize: '0.85rem' }}>{shareStatus}</p>
           </div>
         </div>
       )}
