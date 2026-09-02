@@ -52,7 +52,7 @@ export const TranscriptStep: React.FC<TranscriptStepProps> = ({
   const providerNames = {
     whisper: 'Local Neural Whisper (Client-Side)',
     webspeech: 'Browser Speech Recognition (gu-IN)',
-    gemini: 'Google Gemini 2.5 Flash AI',
+    gemini: 'Google Gemini 3.6 Flash AI',
   };
 
   const runTranscription = async (engine = selectedEngine) => {
@@ -225,7 +225,7 @@ export const TranscriptStep: React.FC<TranscriptStepProps> = ({
                 <Sparkles size={18} color="var(--accent-purple)" />
                 <div>
                   <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>
-                    Google Gemini 2.5 Flash <span style={{ fontSize: '0.75rem', color: 'var(--accent-purple)' }}>[Network Dependent]</span>
+                    Google Gemini 3.6 Flash <span style={{ fontSize: '0.75rem', color: 'var(--accent-purple)' }}>[Network Dependent]</span>
                   </div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                     {project.apiKey ? 'High accuracy cloud transcription' : 'Requires Gemini API Key in Settings'}

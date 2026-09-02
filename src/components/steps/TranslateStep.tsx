@@ -42,7 +42,7 @@ export const TranslateStep: React.FC<TranslateStepProps> = ({
   }, [translatedText, targetLang, project.gujaratiTranscript]);
 
   const providerName = project.apiKey
-    ? 'Google Gemini 2.5 Flash Dubbing Translation'
+    ? 'Google Gemini 3.6 Flash Dubbing Translation'
     : 'Free Web Translation API';
 
   const runTranslation = async (lang: TargetLanguage) => {
@@ -166,7 +166,7 @@ export const TranslateStep: React.FC<TranslateStepProps> = ({
           {project.apiKey ? (
             <>
               <Sparkles size={14} color="var(--accent-purple)" />
-              <span>Active Provider: <strong>Google Gemini 2.5 Flash</strong> (Network-dependent)</span>
+              <span>Active Provider: <strong>Google Gemini 3.6 Flash</strong> (Network-dependent)</span>
             </>
           ) : (
             <>
