@@ -21,7 +21,9 @@ export const TranscriptStep: React.FC<TranscriptStepProps> = ({
   onProceedToTranslate,
   onBackToRecord,
 }) => {
-  const [selectedEngine, setSelectedEngine] = useState<'whisper' | 'webspeech' | 'gemini'>('whisper');
+  const [selectedEngine, setSelectedEngine] = useState<'whisper' | 'webspeech' | 'gemini'>(
+    project.apiKey ? 'gemini' : 'whisper'
+  );
   const [transcriptText, setTranscriptText] = useState<string>(project.gujaratiTranscript || '');
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [progressState, setProgressState] = useState<{ stage: string; percent?: number; message?: string }>({
