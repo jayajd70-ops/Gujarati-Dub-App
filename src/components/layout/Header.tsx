@@ -32,7 +32,7 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="app-header">
       <div className="brand-badge">
-        <img src="/favicon.svg" alt="Logo" className="brand-logo" />
+        <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="Logo" className="brand-logo" />
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <span className="brand-title">Gujarati Dub Studio</span>
